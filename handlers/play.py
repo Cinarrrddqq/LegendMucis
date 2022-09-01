@@ -109,7 +109,7 @@ async def play(_, message: Message):
     try:
         user = await USER.get_me()
     except:
-        user.first_name = "LegendAsistant"
+        user.first_name = "CreativAsisstan"
     usar = user
     wew = usar.id
     try:
@@ -127,18 +127,18 @@ async def play(_, message: Message):
                 try:
                     await USER.join_chat(invitelink)
                     await USER.send_message(
-                        message.chat.id, "**Assistant Account [𝗟 Σ 𝗚 Σ 𝗡 𝗗 ᵃˢⁱˢᵗᵃⁿᵗ](https://t.me/LegendAsistant) Uğurla Qoşuldu.\n\nİndi Musiqi Başlayır**")
+                        message.chat.id, "**Assistant Səsli söhbətə uğurla qoşuldu**")
 
                 except UserAlreadyParticipant:
                     pass
                 except Exception:
                     await lel.edit(
-                        f"Assistant ın banını açın\nİstifadəçi adı: @LegendAsistant\nKöməkçi ID: `5342770432`")
+                        f"Assistant ın banını açın\nİstifadəçi adı: @CreativAsisstan\nKöməkçi ID: `5342770432`")
     try:
         await USER.get_chat(chid)
     except:
         await lel.edit(
-            f"Assistant ın banını açın\nİstifadəçi adı: @LegendAsistant\nKöməkçi ID: `5342770432`")
+            f"Assistant ın banını açın\nİstifadəçi adı: @CreativAsisstan\nKöməkçi ID: `5342770432`")
         return
     
     audio = (message.reply_to_message.audio or message.reply_to_message.voice) if message.reply_to_message else None
@@ -198,10 +198,9 @@ async def play(_, message: Message):
             keyboard = InlineKeyboardMarkup(
                       [
             [
-                InlineKeyboardButton("🥂 Blog Kanalı", url=f"https://t.me/ElegantBlog"),
-                InlineKeyboardButton("📣 Rəsmi Kanalı", url=f"https://t.me/SecretMMC"),
+                InlineKeyboardButton("📣 Rəsmi Kanal", url=f"https://t.me/LordBots"),
             ],[
-                InlineKeyboardButton("🗑️ Menyunu Bağla", callback_data="cls"),
+                InlineKeyboardButton("️⚡️ Menyunu Bağla", callback_data="cls"),
             ],
         ]
     )
@@ -263,10 +262,9 @@ async def play(_, message: Message):
         keyboard = InlineKeyboardMarkup(
                       [
             [
-                InlineKeyboardButton("🥂 Blog Kanalı", url=f"https://t.me/ElegantBlog"),
-                InlineKeyboardButton("📣 Rəsmi Kanalı", url=f"https://t.me/SecretMMC"),
+                InlineKeyboardButton("📣 Rəsmi Kanal", url=f"https://t.me/LordBots"),
             ],[
-                InlineKeyboardButton("🗑️ Menyunu Bağla", callback_data="cls"),
+                InlineKeyboardButton("️🇦🇿 Menyunu Bağla", callback_data="cls"),
             ],
         ]
     )
