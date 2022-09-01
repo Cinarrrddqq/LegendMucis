@@ -37,9 +37,9 @@
       "required": true
     },
     "BOT_OWNER": {
-      "description": "o2o_GenCeLi",
+      "description": "Öz Tağ adını yaz",
       "required": true,
-      "value": "o2o_GenCeLi"
+      "value": "tağ adın"
     },
     "DURATION_LIMIT": {
       "description": "İndirmeler için en fazla ses süresi sınırı (minutes).",
