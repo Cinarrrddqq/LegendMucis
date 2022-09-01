@@ -90,7 +90,7 @@ async def atla(_, message: Message):
 
 # Yetki Vermek için (ver) Yetki almak için (al) komutlarını ekledim.
 # Gayet güzel çalışıyor. @Mahoaga Tarafından Eklenmiştir. 
-@Client.on_message(command("yetkiver") & other_filters)
+@Client.on_message(command("auth") & other_filters)
 @authorized_users_only
 async def authenticate(client, message):
     global admins
@@ -106,7 +106,7 @@ async def authenticate(client, message):
         await message.reply("✔ İstifadəçi onsuzda yetkilidir!")
 
 
-@Client.on_message(command("yetkial") & other_filters)
+@Client.on_message(command("unauth") & other_filters)
 @authorized_users_only
 async def deautenticate(client, message):
     global admins
@@ -123,7 +123,7 @@ async def deautenticate(client, message):
 
 
 # Sesli sohbet için 0-200 arası yeni komut eklenmiş oldu. 
-@Client.on_message(command(["ses"]) & other_filters)
+@Client.on_message(command(["volume"]) & other_filters)
 @authorized_users_only
 async def change_ses(client, message):
     range = message.command[1]
