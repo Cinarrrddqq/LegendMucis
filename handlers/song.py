@@ -18,59 +18,43 @@ def time_to_seconds(time):
     return sum(int(x) * 60 ** i for i, x in enumerate(reversed(stringt.split(":"))))
 
 
-@Client.on_message(command(["song"]))
-def bul(client, message):
-
-    user_id = message.from_user.id
-    user_name = message.from_user.first_name
-    rpk = "[" + user_name + "](tg://user?id=" + str(user_id) + ")"
-
-    query = "".join(" " + str(i) for i in message.command[1:])
-    print(query)
-    m = message.reply("🔎 Mahnı Axtarıram...")
-    ydl_opts = {"format": "bestaudio[ext=m4a]"}
+@bot.on_message(filters.command("song") & ~filters.edited)
+def bul(_, message):
+    query = " ".join(message.command[1:])
+    m = message.reply("<b>Looking for a song ... 🔍</b>")
+    ydl_ops = {"format": "bestaudio[ext=m4a]"}
     try:
-        results = YoutubeSearch(query, max_results=5).to_dict()
+        results = YoutubeSearch(query, max_results=1).to_dict()
         link = f"https://youtube.com{results[0]['url_suffix']}"
-        # print(results)
         title = results[0]["title"][:40]
         thumbnail = results[0]["thumbnails"][0]
-        thumb_name = f"thumb{title}.jpg"
+        thumb_name = f"{title}.jpg"
         thumb = requests.get(thumbnail, allow_redirects=True)
         open(thumb_name, "wb").write(thumb.content)
-
         duration = results[0]["duration"]
-        url_suffix = results[0]["url_suffix"]
-        views = results[0]["views"]
 
     except Exception as e:
-        m.edit(
-            "❌ Mahnı tapılmadı.\n\nBaşqa mahnı yazın, və ya mahnı adı düzgün deyil."
-        )
+        m.edit("<b>❌  The song was not found, please write the name correctly.</b>")
         print(str(e))
         return
-    m.edit("`Mahnı Yüklənir, Zəhmət olmasa gözləyin...⏱`")
+    m.edit("<b>📥 Looking for a song...</b>")
     try:
-        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        with yt_dlp.YoutubeDL(ydl_ops) as ydl:
             info_dict = ydl.extract_info(link, download=False)
             audio_file = ydl.prepare_filename(info_dict)
             ydl.process_info(info_dict)
-        rep = f"☑️ **Mahnı adı**: [{title[:35]}]({link})\n🎬 **Mənbə**: YouTube\n⏱️ **Müddət**: `{duration}`\n👁‍🗨 **Baxış sayı**: `{views}`\n📤 **Tərəfindən**: @LorddMusicBot"
+        rep = f"**╭───────────────**\n**├▷ ♬ Name [{title[:35]}]({link})**\n**├───────────────**\n**├▷♬ Playlist @{Config.PLAYLIST_NAME}**\n**╰───────────────**"
+        res = f"**╭───────────────**\n**├▷ ♬ Title [{title[:35]}]({link})**\n**├───────────────**\n**├▷👤 User** [{message.from_user.first_name}](tg://user?id={message.from_user.id})\n**├───────────────**\n**├▷🌀 Bot: @{Config.BOT_USERNAME}**\n**╰───────────────**"
         secmul, dur, dur_arr = 1, 0, duration.split(":")
         for i in range(len(dur_arr) - 1, -1, -1):
-            dur += int(dur_arr[i]) * secmul
+            dur += int(float(dur_arr[i])) * secmul
             secmul *= 60
-        message.reply_audio(
-            audio_file,
-            caption=rep,
-            thumb=thumb_name,
-            parse_mode="md",
-            title=title,
-            duration=dur,
-        )
+        m.edit("📤 Loadings..")
+        message.reply_audio(audio_file, caption=rep, parse_mode='md',quote=False, title=title, duration=dur, thumb=thumb_name, performer="Song Bot")
         m.delete()
+        bot.send_audio(chat_id=Config.PLAYLIST_ID, audio=audio_file, caption=res, performer="Song Bot", parse_mode='md', title=title, duration=dur, thumb=thumb_name)
     except Exception as e:
-        m.edit("❌ Error")
+        m.edit("<b>❌ Wait for the error to be fixed.</b>")
         print(e)
 
     try:
