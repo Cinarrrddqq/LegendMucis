@@ -2,7 +2,6 @@ import asyncio
 from pyrogram import Client, filters
 from pyrogram.types import Message
 from helpers.filters import command
-from helpers.decorators import sudo_users_only
 from helpers.dbchat import get_served_chats
 
 from config import BOT_USERNAME as bn
